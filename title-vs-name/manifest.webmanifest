@@ -1,8 +1,0 @@
-{
-  "name": "Name from web app manifest",
-  "display": "browser",
-  "display_modifiers": [
-    "window-controls-overlay"
-  ],
-  "theme_color": "#254B85"
-}
