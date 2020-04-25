@@ -2,7 +2,7 @@
   "name": "Example PWA - minimal-ui",
   "display": "minimal-ui",
   "start_url": "./index.html",
-  "theme_color": "#254B85",
+  "theme_color": "#DC143C",
   "icons": [
     {
       "src": "48x48.png",

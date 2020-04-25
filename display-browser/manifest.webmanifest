@@ -2,7 +2,7 @@
   "name": "Example PWA - browser",
   "display": "browser",
   "start_url": "./index.html",
-  "theme_color": "#254B85",
+  "theme_color": "#483D8B",
   "icons": [
     {
       "src": "48x48.png",
