@@ -3,7 +3,7 @@
   "display": "fullscreen",
   "display_override": [ "minimal-ui", "standalone" ],
   "start_url": "./index.html",
-  "theme_color": "#DEB887",
+  "theme_color": "#a22c88",
   "icons": [
     {
       "src": "48x48.png",
