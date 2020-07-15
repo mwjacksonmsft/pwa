@@ -19,6 +19,12 @@ this.addEventListener('fetch', (event) => {
     }
 
     // If we didn't find a match in the cache, use the network.
-    return fetch(event.request);
+    fetch(event.request).catch((error) => {
+      console.log(error);
+    });
+
+
+
+
   }());
 });
