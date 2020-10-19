@@ -7,6 +7,32 @@
         <link rel="manifest" href="./manifest.webmanifest">
     </head>
 
-    <body>Webpage.</body>
+    <body>
+
+        <pre>
+            Regular in scope link: <a href="/">link</a>
+            New tab in scope link: <a href="/" target="_blank">link</a>
+            Fancy about:blank navigating in scope button: <button id="inScopeButton">click</button>
+
+            Regular out of scope link: <a href="https://soft-puppy.glitch.me/">link</a>
+            New tab out of scope link: <a href="https://soft-puppy.glitch.me/" target="_blank">link</a>
+            Fancy about:blank navigating out of scope button: <button id="outOfScopeButton">click</button>
+            </pre>
+
+            <script>
+            inScopeButton.addEventListener('click', event => {
+              const page = window.open('about:blank', '_blank');
+              page.location = location.href;
+            });
+
+            outOfScopeButton.addEventListener('click', event => {
+              const page = window.open('about:blank', '_blank');
+              page.location = 'https://soft-puppy.glitch.me/';
+            });
+            </script>
+
+    </body>
     <script src="app.js"></script>
+
+
 </html>
