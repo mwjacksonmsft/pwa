@@ -1,5 +1,5 @@
 {
-  "name": "Example PWA - display_override",
+  "name": "Example PWA - display_modifiers (wco)",
   "display": "standalone",
   "display_modifiers": [ "window-controls-overlay" ],
   "start_url": "./index.html",
