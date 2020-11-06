@@ -1,6 +1,6 @@
 {
   "name": "Example PWA - display_override",
-  "display": "standard",
+  "display": "standalone",
   "display_modifiers": [ "window-controls-overlay" ],
   "start_url": "./index.html",
   "theme_color": "#a22c88",
