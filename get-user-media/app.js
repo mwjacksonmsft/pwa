@@ -29,11 +29,6 @@ function startVideoCapture() {
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {
-  console.log('DOM fully loaded and parsed');
-  document.getElementsByTagName('body')[0].requestFullscreen();
+  document.querySelector('#showVideo').addEventListener('click', e => startVideoCapture());
 });
-
-
-
-
 
