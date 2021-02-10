@@ -43,6 +43,6 @@ function showPosition(position) {
 
 window.addEventListener('DOMContentLoaded', (event) => {
   document.querySelector('#showVideo').addEventListener('click', e => startVideoCapture());
-  getlocation();
+  getLocation();
 });
 
