@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
+      <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
+        <style>
+          .geeks {
+              margin-left:150px;
+          }
+          p {
+              font-size:20px;
+              margin-left:20px;
+          }
+      </style>
+
         <title>A PWA</title>
         <link rel="manifest" href="./manifest.webmanifest">
     </head>
 
     <body>
+      <p id="location"></p>
       <video id="gum-local" autoplay playsinline></video>
       <button id="showVideo">Open camera</button>
-
     </body>
     <script src="app.js"></script>
-
-
 </html>
