@@ -28,14 +28,18 @@ function startVideoCapture() {
     .catch(function (err) { console.log(err.name + ": " + err.message); }); // always check for errors at the end.
 }
 
-function getlocation() {
-  navigator.geolocation.getCurrentPosition(showLoc);
-}
-function showLoc(pos) {
-  document.getElementById("location").innerHTML = "Latitude: " + pos.coords.latitude +
-    "<br>Longitude: " + pos.coords.longitude;
+function getLocation() {
+  if (navigator.geolocation) {
+    document.getElementById("location").innerHTML = "Geolocation is supported by this browser - waiting...";
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    document.getElementById("location").innerHTML = "Geolocation is not supported by this browser.";
+  }
 }
 
+function showPosition(position) {
+  document.getElementById("location").innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
+}
 
 window.addEventListener('DOMContentLoaded', (event) => {
   document.querySelector('#showVideo').addEventListener('click', e => startVideoCapture());
