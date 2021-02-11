@@ -64,6 +64,8 @@ function getLocation() {
 
 window.addEventListener('DOMContentLoaded', (event) => {
   document.querySelector('#showVideo').addEventListener('click', e => startVideoCapture());
-  getLocation();
 });
 
+window.onload = function () {
+  getLocation();
+}
