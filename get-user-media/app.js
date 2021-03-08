@@ -15,20 +15,20 @@ if (navigator.serviceWorker) {
 
 function startVideoCapture() {
   // Prefer camera resolution nearest to 1280x720.
-  var constraints = { audio: true, video: { width: 1280, height: 720 } };
+  var constraints = { audio: true, video: { width: 640, height: 480 } };
 
   navigator.mediaDevices.getUserMedia(constraints)
     .then(function (mediaStream) {
-      var video = document.querySelector('video');
+      var video = document.getElementById('gum-local');
       video.srcObject = mediaStream;
       video.onloadedmetadata = function (e) {
         video.play();
       };
     })
-    .catch(function (err) { console.log(err.name + ": " + err.message); }); // always check for errors at the end.
+    .catch(function (err) { document.getElementById('video-error').innerHTML = (err.name + ": " + err.message); }); // always check for errors at the end.
 }
 
-function getLocation() {
+function getLocation(id) {
   if (navigator.geolocation) {
 
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -36,7 +36,7 @@ function getLocation() {
       var latitude = position.coords.latitude,
         longitude = position.coords.longitude;
 
-      document.getElementById("location").innerHTML = "Latitude: " + latitude + ", Longitude: " + longitude;
+      document.getElementById(id).innerHTML = "Latitude: " + latitude + ", Longitude: " + longitude;
 
     }, handleError);
 
@@ -44,28 +44,29 @@ function getLocation() {
       //Handle Errors
       switch (error.code) {
         case error.PERMISSION_DENIED:
-          document.getElementById("location").innerHTML = "User denied the request for Geolocation.";
+          document.getElementById(id).innerHTML = "User denied the request for Geolocation.";
           break;
         case error.POSITION_UNAVAILABLE:
-          document.getElementById("location").innerHTML = "Location information is unavailable.";
+          document.getElementById(id).innerHTML = "Location information is unavailable.";
           break;
         case error.TIMEOUT:
-          document.getElementById("location").innerHTML = "The request to get user location timed out.";
+          document.getElementById(id).innerHTML = "The request to get user location timed out.";
           break;
         case error.UNKNOWN_ERROR:
-          document.getElementById("location").innerHTML = "An unknown error occurred.";
+          document.getElementById(id).innerHTML = "An unknown error occurred.";
           break;
       }
     }
   } else {
-    document.getElementById("location").innerHTML = "Geolocation is not Supported for this browser/OS";
+    document.getElementById(id).innerHTML = "Geolocation is not Supported for this browser/OS";
   }
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {
-  document.querySelector('#showVideo').addEventListener('click', e => startVideoCapture());
+  document.getElementById('showVideo').addEventListener('click', e => startVideoCapture());
+  document.getElementById('show-location').addEventListener('click', e => getLocation('location-click'));
 });
 
 window.onload = function () {
-  getLocation();
+  getLocation('location-startup');
 }
