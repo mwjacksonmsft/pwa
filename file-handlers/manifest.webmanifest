@@ -19,6 +19,6 @@
       "accept": {
         "text/csv": [".csv"]
       }
-    },
+    }
   ]
 }
