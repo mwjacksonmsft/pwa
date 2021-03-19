@@ -13,6 +13,25 @@ if (navigator.serviceWorker) {
 }
 
 
+async function verifyPermission(fileHandle, withWrite) {
+  const opts = {};
+  if (withWrite) {
+    opts.mode = 'readwrite';
+  }
+
+  // Check if we already have permission, if so, return true.
+  if (await fileHandle.queryPermission(opts) === 'granted') {
+    return true;
+  }
+
+  // Request permission to the file, if the user grants permission, return true.
+  if (await fileHandle.requestPermission(opts) === 'granted') {
+    return true;
+  }
+
+  // The user did not grant permission, return false.
+  return false;
+}
 
 
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -27,7 +46,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
       }
       for (const fileHandle of launchParams.files) {
         // Handle the file.
-        console.log('fileHandle = ' + fileHandle);
+        console.log('fileHandle.kind = ' + fileHandle.kind);
+        console.log('fileHandle.name = ' + fileHandle.name);
+        console.log('can read/write = ' + verifyPermission(fileHandle, true));
+
       }
     });
   }
