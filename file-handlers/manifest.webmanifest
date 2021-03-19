@@ -15,7 +15,7 @@
   ],
   "file_handlers": [
     {
-      "action": "/",
+      "action": "/file-handlers/",
       "accept": {
         "text/csv": [".csv"]
       }
