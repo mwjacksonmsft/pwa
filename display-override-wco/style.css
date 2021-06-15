@@ -1,0 +1,111 @@
+:root {
+  --fallback-title-bar-height: 40px;
+  --theme-color: #10826b;
+
+  /* The idea is that we will be able to override these for testing,
+     but it can also work properly once the env()s are implemented(). */
+  --titlebar-area-x: env(titlebar-area-x);
+  --titlebar-area-width: env(titlebar-area-width);
+  --titlebar-area-y: env(titlebar-area-y);
+  --titlebar-area-height: env(titlebar-area-height);
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  touch-action: none;
+}
+
+#titleBarContainer {
+  position: absolute;
+  top: var(--titlebar-area-y, 0);
+  height: var(--titlebar-area-height, var(--fallback-title-bar-height));
+  width: 100%;
+  background-color: var(--theme-color);
+}
+
+#titleBar {
+  position: absolute;
+  top: var(--titlebar-area-y, 0);
+  display: flex;
+  user-select: none;
+  height: 100%;
+  left: var(--titlebar-area-x, 0);
+  width: var(--titlebar-area-width, 100%);
+
+  color: #FFFFFF;
+  font-weight: bold;
+  text-align: center;
+
+  /* cut off UI so you know that it would flow under the overlay */
+  overflow: hidden;
+
+  -webkit-app-region: drag;
+}
+
+#titleBar > span {
+  margin: auto;
+  padding: 0px 16px 0px 16px;
+}
+
+#titleBar > input {
+  flex: 1;
+  margin: 8px 8px 8px 0;
+  border-radius: 5px;
+  border: none;
+  padding: 8px;
+  -webkit-app-region: no-drag;
+}
+
+.overlayArea > button {
+  margin: auto;
+}
+
+#mainContent {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: var(--titlebar-area-height, var(--fallback-title-bar-height));
+  overflow-y: scroll;
+  touch-action: auto;
+}
+
+#mainContent.overlay {
+  top: env(safe-area-y);
+}
+
+.overflowingDiv {
+  height: 200%;
+  margin: 25px;
+}
+
+.mono {
+  font-family: 'Courier New', Courier, monospace;
+  white-space: pre;
+}
+
+.red {
+  color: red;
+}
+
+#windowControlsOverlayElementStyle {
+  padding-left: env(titlebar-area-x);
+  padding-right: env(titlebar-area-width);
+  padding-top: env(titlebar-area-y);
+  padding-bottom: env(titlebar-area-height);
+}
+
+@media (forced-colors: active) {
+  :root {
+    --theme-color: Canvas;
+  }
+
+  #titleBarContainer {
+    border-bottom: 1px solid ButtonText;
+  }
+
+  #mainContent {
+    top: calc(var(--titlebar-area-height, var(--fallback-title-bar-height)) + 1px);
+  }
+}
