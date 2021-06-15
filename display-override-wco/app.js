@@ -1,9 +1,9 @@
-
 const registerServiceWorker = async () => {
   try {
-    console.log('Service worker registered');
+      await navigator.serviceWorker.register('/pwa/display-override-wco/sw.js', { scope: '/pwa/display-override-wco/'});
+      console.log('Service worker registered');
   } catch (e) {
-    console.log(`Registration failed: ${e}`);
+      console.log(`Registration failed: ${e}`);
   }
 }
 
