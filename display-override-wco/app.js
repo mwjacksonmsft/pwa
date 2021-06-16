@@ -70,7 +70,7 @@ const updatewindowControlsOverlayInfo = () => {
   windowControlsOverlayCSSDiv.style.visibility = 'visible';
 
   const boundingClientRect = navigator.windowControlsOverlay.getBoundingClientRect();
-  rectElement.innerText = `navigator.windowControlsOverlay.visible = ${navigator.windowControlsOverlay.visible}
+  windowControlsOverlayJSDiv.innerText = `navigator.windowControlsOverlay.visible = ${navigator.windowControlsOverlay.visible}
 navigator.windowControlsOverlay.getBoundingClientRect() = {
 x: ${boundingClientRect.x},
 y: ${boundingClientRect.y},
@@ -126,7 +126,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
     boundsPadding: 0.1,
     onTouch: function(e) {
       return false;
+    },
+    beforeWheel: function(e) {
+      return true;
+    },
+    beforeMouseDown: function(e) {
+      return true;
+    },
+    filterKey: function() {
+      return true;
     }
+
   });
 }
 
