@@ -112,9 +112,23 @@ window.addEventListener('DOMContentLoaded', (event) => {
     window.addEventListener('resize', handleResize);
   }
 
+  if (document.getElementById('themeColor')) {
+
   document.getElementById('themeColor').addEventListener('keydown', handleThemeColorKeyDown, false);
   document.getElementById('applyThemeColor').addEventListener('click', handleApplyThemeColorClick, false);
+  }
 
+  if(document.getElementById('overflowMainContent')) {
+  panzoom(document.getElementById('overflowMainContent'), {
+    maxZoom: 2.0,
+    minZoom: 1.0,
+    bounds: true,
+    boundsPadding: 0.1,
+    onTouch: function(e) {
+      return false;
+    }
+  });
+}
 
   updatewindowControlsOverlayInfo();
 });

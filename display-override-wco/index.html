@@ -7,6 +7,8 @@
     <title>A PWA</title>
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="stylesheet" href="style.css">
+    <script src='https://unpkg.com/panzoom@9.4.0/dist/panzoom.min.js'></script>
+
 </head>
 
 <body>
@@ -18,7 +20,7 @@
     </div>
 
     <div id="mainContent">
-        <div class="overflowingDiv">
+        <div id="overflowMainContent" class="overflowingDiv">
             <div>
                 <div id="error" class="red"></div>
                 <div id="windowControlsOverlayJS" class="mono"></div>
@@ -32,6 +34,8 @@
                     <input type="text" id="themeColor" placeholder="Color value" style="z-index:0;">
                     <button id="applyThemeColor">Apply</button>
                 </div>
+
+                <iframe src="iframe.html" width=500 height=200></iframe>
             </div>
 
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et

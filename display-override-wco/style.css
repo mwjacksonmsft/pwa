@@ -1,6 +1,6 @@
 :root {
   --fallback-title-bar-height: 40px;
-  --theme-color: #10826b;
+  --theme-color: #8dda38;
 
   /* The idea is that we will be able to override these for testing,
      but it can also work properly once the env()s are implemented(). */
