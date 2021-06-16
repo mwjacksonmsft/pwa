@@ -23,14 +23,15 @@
         <div id="overflowMainContent" class="overflowingDiv">
             <div>
                 <div id="error" class="red"></div>
-                <div id="windowControlsOverlayJS" class="mono"></div>
-                <div id="windowControlsOverlayCSS" class="mono"></div>
                 <div id="windowControlsOverlayGeometryChange" class="mono"></div>
                 <div id="resizeCount" class="mono"></div>
+                <div id="windowControlsOverlayJS" class="mono"></div>
+                <div id="windowControlsOverlayCSS" class="mono"></div>
                 <div><a href="otherpage.html">Navigate to another page within app scope</a></div>
                 <div><a href="https://example.com">Navigate to another page outside of the app scope</a></div>
 
-                <div><p>Set Hex Theme Color (leave blank to clear):</p>
+                <div>
+                    <p>Set Hex Theme Color (leave blank to clear):</p>
                     <input type="text" id="themeColor" placeholder="Color value" style="z-index:0;">
                     <button id="applyThemeColor">Apply</button>
                 </div>
@@ -82,6 +83,8 @@
                 interdum varius sit amet mattis vulputate enim.</p>
         </div>
     </div>
+    <div id="windowControlsOverlayElementStyle"></div>
 </body>
 <script src="app.js"></script>
+
 </html>

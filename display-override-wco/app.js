@@ -1,9 +1,9 @@
 const registerServiceWorker = async () => {
   try {
-      await navigator.serviceWorker.register('/pwa/display-override-wco/sw.js', { scope: '/pwa/display-override-wco/'});
-      console.log('Service worker registered');
+    await navigator.serviceWorker.register('/pwa/display-override-wco/sw.js', { scope: '/pwa/display-override-wco/' });
+    console.log('Service worker registered');
   } catch (e) {
-      console.log(`Registration failed: ${e}`);
+    console.log(`Registration failed: ${e}`);
   }
 }
 
@@ -113,32 +113,31 @@ window.addEventListener('DOMContentLoaded', (event) => {
   }
 
   if (document.getElementById('themeColor')) {
-
-  document.getElementById('themeColor').addEventListener('keydown', handleThemeColorKeyDown, false);
-  document.getElementById('applyThemeColor').addEventListener('click', handleApplyThemeColorClick, false);
+    document.getElementById('themeColor').addEventListener('keydown', handleThemeColorKeyDown, false);
+    document.getElementById('applyThemeColor').addEventListener('click', handleApplyThemeColorClick, false);
   }
 
-  if(document.getElementById('overflowMainContent')) {
-  panzoom(document.getElementById('overflowMainContent'), {
-    maxZoom: 2.0,
-    minZoom: 1.0,
-    bounds: true,
-    boundsPadding: 0.1,
-    onTouch: function(e) {
-      return false;
-    },
-    beforeWheel: function(e) {
-      return true;
-    },
-    beforeMouseDown: function(e) {
-      return true;
-    },
-    filterKey: function() {
-      return true;
-    }
+  if (document.getElementById('overflowMainContent')) {
+    panzoom(document.getElementById('overflowMainContent'), {
+      maxZoom: 2.0,
+      minZoom: 1.0,
+      bounds: true,
+      boundsPadding: 0.1,
+      onTouch: function (e) {
+        return false;
+      },
+      beforeWheel: function (e) {
+        return true;
+      },
+      beforeMouseDown: function (e) {
+        return true;
+      },
+      filterKey: function () {
+        return true;
+      }
 
-  });
-}
+    });
+  }
 
   updatewindowControlsOverlayInfo();
 });
