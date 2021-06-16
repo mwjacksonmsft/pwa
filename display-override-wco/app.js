@@ -51,32 +51,9 @@ const updatewindowControlsOverlayInfo = () => {
   const windowControlsOverlayCSSDiv = document.getElementById('windowControlsOverlayCSS');
   const geometryChangeCountDiv = document.getElementById('windowControlsOverlayGeometryChange');
   const resizeCountDiv = document.getElementById('resizeCount');
-  const errorDiv = document.getElementById("error");
 
   geometryChangeCountDiv.textContent = `geometrychange count: ${geometryChangeCount}`;
   resizeCountDiv.textContent = `resize count: ${resizeCount}`;
-
-  if (!navigator.windowControlsOverlay) {
-    errorDiv.innerText = 'navigator.windowControlsOverlay not defined';
-    errorDiv.style.visibility = 'visible';
-    windowControlsOverlayJSDiv.style.visibility = 'hidden';
-    windowControlsOverlayCSSDiv.style.visibility = 'hidden';
-    console.error(errorDiv.innerText);
-    return;
-  }
-
-  errorDiv.style.visibility = 'hidden';
-  windowControlsOverlayJSDiv.style.visibility = 'visible';
-  windowControlsOverlayCSSDiv.style.visibility = 'visible';
-
-  const boundingClientRect = navigator.windowControlsOverlay.getBoundingClientRect();
-  windowControlsOverlayJSDiv.innerText = `navigator.windowControlsOverlay.visible = ${navigator.windowControlsOverlay.visible}
-navigator.windowControlsOverlay.getBoundingClientRect() = {
-x: ${boundingClientRect.x},
-y: ${boundingClientRect.y},
-width: ${boundingClientRect.width},
-height: ${boundingClientRect.height}
-}`;
 
   const windowControlsOverlayElementStyle = document.getElementById('windowControlsOverlayElementStyle');
   const x = getComputedStyle(windowControlsOverlayElementStyle).getPropertyValue('padding-left');
@@ -88,6 +65,20 @@ height: ${boundingClientRect.height}
 titlebar-area-width: ${w},
 titlebar-area-y: ${y},
 titlebar-area-height: ${h}`;
+
+  if (!navigator.windowControlsOverlay) {
+    windowControlsOverlayJSDiv.innerText = 'navigator.windowControlsOverlay not defined';
+    console.error(windowControlsOverlayJSDiv.innerText);
+  } else {
+    const boundingClientRect = navigator.windowControlsOverlay.getBoundingClientRect();
+    windowControlsOverlayJSDiv.innerText = `navigator.windowControlsOverlay.visible = ${navigator.windowControlsOverlay.visible}
+navigator.windowControlsOverlay.getBoundingClientRect() = {
+x: ${boundingClientRect.x},
+y: ${boundingClientRect.y},
+width: ${boundingClientRect.width},
+height: ${boundingClientRect.height}
+}`;
+  }
 }
 
 let geometryChangeCount = 0;
@@ -101,6 +92,34 @@ const handleGeometryChange = () => {
 const handleResize = () => {
   resizeCount++;
   updatewindowControlsOverlayInfo();
+}
+
+const preventMouseWheelZoom = (e) => {
+  if (e.ctrlKey) {
+    e.preventDefault();
+  }
+}
+
+const preventKeyDownZoom = (e) => {
+  if (e.ctrlKey && (e.which == '61' || e.which == '107' || e.which == '173' || e.which == '109' || e.which == '187' || e.which == '189')) {
+    e.preventDefault();
+  }
+}
+
+const handleKeyDownZoom = (e) => {
+  if (e.ctrlKey) {
+    if (e.which == '61' || e.which == '107') {
+      if (instance) {
+        instance.zoomTo(0, 0, 1.5);
+      }
+      e.preventDefault();
+    } else if (e.which == '173' || e.which == '109' || e.which == '187' || e.which == '189') {
+      if (instance) {
+        instance.zoomTo(0, 0, 0.5);
+      }
+      e.preventDefault();
+    }
+  }
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -117,8 +136,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('applyThemeColor').addEventListener('click', handleApplyThemeColorClick, false);
   }
 
-  if (document.getElementById('overflowMainContent')) {
-    panzoom(document.getElementById('overflowMainContent'), {
+  const overflowMainContent = document.getElementById('overflowMainContent');
+  if (overflowMainContent) {
+    instance = panzoom(overflowMainContent, {
       maxZoom: 2.0,
       minZoom: 1.0,
       bounds: true,
@@ -127,7 +147,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         return false;
       },
       beforeWheel: function (e) {
-        return true;
+        return !e.ctrlKey;
       },
       beforeMouseDown: function (e) {
         return true;
@@ -135,8 +155,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
       filterKey: function () {
         return true;
       }
-
     });
+  }
+
+  document.getElementById('body').addEventListener('keydown', handleKeyDownZoom, false);
+
+  const titleBarContainer = document.getElementById('titleBarContainer');
+  if (titleBarContainer) {
+    titleBarContainer.addEventListener('mousewheel', preventMouseWheelZoom, false);
   }
 
   updatewindowControlsOverlayInfo();

@@ -86,10 +86,6 @@ body {
   white-space: pre;
 }
 
-.red {
-  color: red;
-}
-
 #windowControlsOverlayElementStyle {
   padding-left: env(titlebar-area-x);
   padding-right: env(titlebar-area-width);
@@ -108,5 +104,11 @@ body {
 
   #mainContent {
     top: calc(var(--titlebar-area-height, var(--fallback-title-bar-height)) + 1px);
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  #searchbox {
+    visibility: collapse;
   }
 }
