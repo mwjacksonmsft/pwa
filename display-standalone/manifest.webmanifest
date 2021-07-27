@@ -12,5 +12,49 @@
       "src": "144x144.png",
       "sizes": "144x144"
     }
-  ]
+  ],
+
+  "shortcuts": [
+    {
+        "name": "New message",
+        "description": "Compose a new message",
+        "url": "/display-standalone/new-mail.html",
+        "icons": [
+            {
+                "src": "48x48.png",
+                "sizes": "48x48",
+                "type": "image/png"
+            }
+        ]
+    },
+    {
+        "name": "Some other action (relative)",
+        "description": "Perform some other action 1",
+        "url": "other-action-rel.html",
+        "icons": [
+            {
+                "src": "144x144.png",
+                "sizes": "144x144",
+                "type": "image/png"
+            }
+        ]
+    },
+    {
+        "name": "Some other action (absolute)",
+        "description": "Perform some other action 2",
+        "url": "/display-standalone/other-action-absolute.html",
+        "icons": [
+            {
+              "src": "wco-48x48.png",
+              "sizes": "48x48",
+              "type": "image/png"
+            },
+            {
+              "src": "144x144.png",
+              "sizes": "144x144",
+              "type": "image/png"
+            }
+        ]
+      }
+    ]
 }
