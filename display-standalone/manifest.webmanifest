@@ -18,7 +18,7 @@
     {
         "name": "New message",
         "description": "Compose a new message",
-        "url": "/display-standalone/new-mail.html",
+        "url": "new-mail.html",
         "icons": [
             {
                 "src": "48x48.png",
@@ -28,8 +28,8 @@
         ]
     },
     {
-        "name": "Some other action (relative)",
-        "description": "Perform some other action 1",
+        "name": "Some other action",
+        "description": "Perform some other action",
         "url": "other-action-rel.html",
         "icons": [
             {
@@ -40,9 +40,9 @@
         ]
     },
     {
-        "name": "Some other action (absolute)",
-        "description": "Perform some other action 2",
-        "url": "/display-standalone/other-action-absolute.html",
+        "name": "Some other action with multiple icons",
+        "description": "Perform some other action with multiple icons",
+        "url": "other-action-absolute.html",
         "icons": [
             {
               "src": "wco-48x48.png",
