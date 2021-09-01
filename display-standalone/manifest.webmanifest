@@ -13,7 +13,67 @@
       "sizes": "144x144"
     }
   ],
-
+  "protocol_handlers": [
+    {
+      "protocol": "mailto",
+      "url": "https://mwjacksonmsft.github.io/pwa/display-standalone/?mailto=%s"
+    },
+    {
+      "protocol": "web+testing",
+      "url": "https://mwjacksonmsft.github.io/pwa/display-standalone/?testing=%s"
+    },
+    {
+      "protocol": "web+profile",
+      "url": "https://mwjacksonmsft.github.io/pwa/display-standalone/?profile=%s"
+    },
+    {
+      "protocol": "web+github",
+      "url": "https://mwjacksonmsft.github.io/pwa/display-standalone/?github=%s"
+    },
+    {
+      "protocol": "web+extrastuff",
+      "url": "https://mwjacksonmsft.github.io/pwa/display-standalone/?extrastuff=%s",
+      "foobar": "foobar"
+    },
+    {
+      "protocol": "ms-word",
+      "url": "https://mwjacksonmsft.github.io/pwa/display-standalone/?ms-word=%s"
+    },
+    {
+      "protocol": "web+missingtoken",
+      "url": "https://mwjacksonmsft.github.io/pwa/display-standalone/?web+missingtoken"
+    },
+    {
+      "protocol": "web+crossorigin",
+      "url": "https://mwjacksonmsft.github.io/pwa/display-standalone/?%s"
+    },
+    {
+      "protocol": "web+relative",
+      "url": "/?%s"
+    },
+    {
+      "protocol": "web+relativewithouttoken",
+      "url": "/?"
+    },
+    {
+      "invalid-protocol": "this is an invalid protocol entry for testing purposes"
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "https://microsoft.com",
+      "accept": {
+        "text/csv": "Not a valid extension"
+      }
+    },
+    {
+      "action": "/",
+      "accept": {
+        "text/csv": [ ".txt2, txt3" ],
+        "application/vnd.alternative-graph-app.graph": ".graph2"
+      }
+    }
+  ],
   "shortcuts": [
     {
         "name": "New message",
