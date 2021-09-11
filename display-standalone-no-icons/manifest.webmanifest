@@ -1,11 +1,11 @@
 {
-  "name": "Example PWA - standard-no-icons",
-  "display": "standard",
+  "name": "Example PWA - standalone-no-icons",
+  "display": "standalone",
   "start_url": "./index.html",
   "theme_color": "#DC143C",
   "protocol_handlers": [
     {
-      "protocol": "web+profile2",
+      "protocol": "web+mytest",
       "url": "https://mwjacksonmsft.github.io/pwa/display-standalone/?profile=%s"
     }
   ]
