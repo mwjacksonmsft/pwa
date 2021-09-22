@@ -45,7 +45,7 @@
     },
     {
       "protocol": "web+crossorigin",
-      "url": "https://mwjacksonmsft.github.io/pwa/display-standalone/?%s"
+      "url": "https://example.com/?%s"
     },
     {
       "protocol": "web+relative",
@@ -115,6 +115,18 @@
               "type": "image/png"
             }
         ]
-      }
+      },
+      {
+        "name": "Cross Origin",
+        "description": "Cross Origin Shortcut",
+        "url": "https://example.com/",
+        "icons": [
+            {
+                "src": "48x48.png",
+                "sizes": "48x48",
+                "type": "image/png"
+            }
+        ]
+    },
     ]
 }
