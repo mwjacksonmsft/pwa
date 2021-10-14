@@ -15,6 +15,10 @@
   ],
   "protocol_handlers": [
     {
+      "protocol": "web+simple",
+      "url": "%s"
+    },
+    {
       "protocol": "mailto",
       "url": "https://mwjacksonmsft.github.io/pwa/display-standalone/?mailto=%s"
     },
