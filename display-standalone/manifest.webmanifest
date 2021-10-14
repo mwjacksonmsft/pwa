@@ -19,6 +19,10 @@
       "url": "%s"
     },
     {
+      "protocol": "web+simpleabs",
+      "url": "https://mwjacksonmsft.github.io/pwa/display-standalone/%s"
+    },
+    {
       "protocol": "mailto",
       "url": "https://mwjacksonmsft.github.io/pwa/display-standalone/?mailto=%s"
     },
