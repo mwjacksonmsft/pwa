@@ -45,14 +45,26 @@ const handleThemeColorKeyDown = (e) => {
   }
 }
 
-const updatewindowControlsOverlayInfo = () => {
+const updatewindowControlsOverlayInfo = (titlebarAreaRect) => {
 
   const windowControlsOverlayJSDiv = document.getElementById('windowControlsOverlayJS');
   const windowControlsOverlayCSSDiv = document.getElementById('windowControlsOverlayCSS');
   const geometryChangeCountDiv = document.getElementById('windowControlsOverlayGeometryChange');
   const resizeCountDiv = document.getElementById('resizeCount');
 
-  geometryChangeCountDiv.textContent = `geometrychange count: ${geometryChangeCount}`;
+  if (titlebarAreaRect) {
+    geometryChangeCountDiv.innerText = `geometrychange count: ${geometryChangeCount}
+WCOGeometryChangeEvent.titlebarAreaRect = {
+x: ${titlebarAreaRect.x},
+y: ${titlebarAreaRect.y},
+width: ${titlebarAreaRect.width},
+height: ${titlebarAreaRect.height}
+}`;
+  } else {
+    geometryChangeCountDiv.textContent = `geometrychange count: ${geometryChangeCount}
+WCOGeometryChangeEvent.titlebarAreaRect = Not Set`;
+  }
+
   resizeCountDiv.textContent = `resize count: ${resizeCount}`;
 
   const windowControlsOverlayElementStyle = document.getElementById('windowControlsOverlayElementStyle');
@@ -70,9 +82,9 @@ titlebar-area-height: ${h}`;
     windowControlsOverlayJSDiv.innerText = 'navigator.windowControlsOverlay not defined';
     console.error(windowControlsOverlayJSDiv.innerText);
   } else {
-    const boundingClientRect = navigator.windowControlsOverlay.getBoundingClientRect();
+    const boundingClientRect = navigator.windowControlsOverlay.getTitlebarAreaRect();
     windowControlsOverlayJSDiv.innerText = `navigator.windowControlsOverlay.visible = ${navigator.windowControlsOverlay.visible}
-navigator.windowControlsOverlay.getBoundingClientRect() = {
+navigator.windowControlsOverlay.getTitlebarAreaRect() = {
 x: ${boundingClientRect.x},
 y: ${boundingClientRect.y},
 width: ${boundingClientRect.width},
@@ -84,9 +96,9 @@ height: ${boundingClientRect.height}
 let geometryChangeCount = 0;
 let resizeCount = 0;
 
-const handleGeometryChange = () => {
+const handleGeometryChange = (e) => {
   geometryChangeCount++;
-  updatewindowControlsOverlayInfo();
+  updatewindowControlsOverlayInfo(e.titlebarAreaRect);
 }
 
 const handleResize = () => {
