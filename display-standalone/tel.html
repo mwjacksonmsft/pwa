@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>A PWA - tel protocol activation</title>
+    <link rel="manifest" href="./manifest.webmanifest">
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const telParam = urlParams.get('tel');
+            console.log(telParam);
+            document.getElementById('phonenumber').innerText = "Phone no: " + telParam;
+        });
+    </script>
+</head>
+
+<body>
+    <p id="phonenumber"> no phone number </p>
+</body>
+
+</html>

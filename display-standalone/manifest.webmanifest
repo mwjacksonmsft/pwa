@@ -27,6 +27,10 @@
       "url": "https://mwjacksonmsft.github.io/pwa/display-standalone/?mailto=%s"
     },
     {
+      "protocol": "tel",
+      "url": "https://mwjacksonmsft.github.io/pwa/display-standalone/tel.html?tel=%s"
+    },
+    {
       "protocol": "web+testing",
       "url": "https://mwjacksonmsft.github.io/pwa/display-standalone/?testing=%s"
     },
