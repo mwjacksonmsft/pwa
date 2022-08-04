@@ -17,7 +17,7 @@ body {
 }
 
 #titleBarContainer {
-  position: absolute;
+  position: fixed;
   top: var(--titlebar-area-y, 0);
   height: var(--titlebar-area-height, var(--fallback-title-bar-height));
   width: 100%;
