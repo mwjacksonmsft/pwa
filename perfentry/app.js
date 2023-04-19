@@ -13,8 +13,8 @@ const gridOptions = {
 
   // each entry here represents one column
   columnDefs: [
-    { field: "name" },
     { field: "entryType" },
+    { field: "name" },
     { field: "startTime" },
     { field: "duration" },
   ],
@@ -30,20 +30,7 @@ if (navigator.serviceWorker) {
 let allPerfEntries = [];
 
 function renderDataInTheTable(list, observer) {
-  /*
-  const perfTable = document.getElementById("perfGrid");
-  perfEntries.forEach(entry => {
-      let newRow = document.createElement("tr");
-      Object.values(entry).forEach((value) => {
-          let cell = document.createElement("td");
-          cell.innerText = value;
-          newRow.appendChild(cell);
-      })
-      perfTable.appendChild(newRow);
-  });
-  */
-
-  allPerfEntries.push(list.getEntries());
+  allPerfEntries = allPerfEntries.concat(list.getEntries());
   gridOptions.api.setRowData(allPerfEntries);
 }
 
@@ -57,11 +44,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
   const observer = new PerformanceObserver(renderDataInTheTable);
 
+  // "script", << not supported
   [
     "back-forward-cache-restoration", "element", "event", "first-input",
     "largest-contentful-paint", "layout-shift", "long-animation-frame",
     "longtask", "mark", "measure", "navigation", "paint", "resource",
-    "script", "soft-navigation", "taskattribution", "visibility-state"
+    "soft-navigation", "taskattribution", "visibility-state"
   ].forEach((type) => {
     console.log('Observing: ' + type);
     observer.observe({ type, buffered: true })
