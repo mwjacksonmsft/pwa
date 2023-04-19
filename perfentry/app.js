@@ -57,12 +57,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
   const observer = new PerformanceObserver(renderDataInTheTable);
 
-  // "script", << not supported
   [
     "back-forward-cache-restoration", "element", "event", "first-input",
     "largest-contentful-paint", "layout-shift", "long-animation-frame",
     "longtask", "mark", "measure", "navigation", "paint", "resource",
-    "soft-navigation", "taskattribution", "visibility-state"
+    "script", "soft-navigation", "taskattribution", "visibility-state"
   ].forEach((type) => {
     console.log('Observing: ' + type);
     observer.observe({ type, buffered: true })
