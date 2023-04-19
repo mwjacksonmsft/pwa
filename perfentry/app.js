@@ -63,10 +63,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
     "largest-contentful-paint", "layout-shift", "long-animation-frame",
     "longtask", "navigation", "paint", "resource", "soft-navigation",
     "taskattribution", "visibility-state"
-  ].forEach((type) =>
-    console.log("Observing: " + type);
-    observer.observe({ type, buffered: true });
-  );
+  ].forEach((type) => {
+    console.log('Observing: ' + type);
+    observer.observe({ type, buffered: true })
+  });
 
   observer.observe({ entryTypes: ["measure", "mark"] });
 });
