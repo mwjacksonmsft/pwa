@@ -61,13 +61,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
   [
     "back-forward-cache-restoration", "element", "event", "first-input",
     "largest-contentful-paint", "layout-shift", "long-animation-frame",
-    "longtask", "navigation", "paint", "resource", "soft-navigation",
-    "taskattribution", "visibility-state"
+    "longtask", "mark", "measure", "navigation", "paint", "resource",
+    "soft-navigation", "taskattribution", "visibility-state"
   ].forEach((type) => {
     console.log('Observing: ' + type);
     observer.observe({ type, buffered: true })
   });
-
-  observer.observe({ entryTypes: ["measure", "mark"] });
 });
 
