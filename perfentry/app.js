@@ -27,6 +27,8 @@ if (navigator.serviceWorker) {
   registerServiceWorker();
 }
 
+let allPerfEntries = [];
+
 function renderDataInTheTable(list, observer) {
   /*
   const perfTable = document.getElementById("perfGrid");
@@ -41,7 +43,8 @@ function renderDataInTheTable(list, observer) {
   });
   */
 
-  gridOptions.api.setRowData(list.getEntries());
+  allPerfEntries.push(...list.getEntries().map(obj => copy(obj)));
+  gridOptions.api.setRowData(allPerfEntries);
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {
