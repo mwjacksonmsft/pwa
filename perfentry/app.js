@@ -64,7 +64,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
     "longtask", "navigation", "paint", "resource", "soft-navigation",
     "taskattribution", "visibility-state"
   ].forEach((type) =>
-    observer.observe({ type, buffered: true })
+    console.log("Observing: " + type);
+    observer.observe({ type, buffered: true });
   );
 
   observer.observe({ entryTypes: ["measure", "mark"] });
