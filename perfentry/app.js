@@ -43,7 +43,7 @@ function renderDataInTheTable(list, observer) {
   });
   */
 
-  allPerfEntries.push(...list.getEntries().map(obj => copy(obj)));
+  allPerfEntries.push(list.getEntries());
   gridOptions.api.setRowData(allPerfEntries);
 }
 
@@ -57,10 +57,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
   const observer = new PerformanceObserver(renderDataInTheTable);
 
+  // "script", << not supported
   [
     "back-forward-cache-restoration", "element", "event", "first-input",
     "largest-contentful-paint", "layout-shift", "long-animation-frame",
-    "longtask", "navigation", "paint", "resource", "script", "soft-navigation",
+    "longtask", "navigation", "paint", "resource", "soft-navigation",
     "taskattribution", "visibility-state"
   ].forEach((type) =>
     observer.observe({ type, buffered: true })
