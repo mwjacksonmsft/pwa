@@ -8,6 +8,12 @@ const registerServiceWorker = async () => {
   }
 }
 
+const very_long_frame_duration = 360;
+function busy_wait(ms_delay = very_long_frame_duration) {
+  const deadline = performance.now() + ms_delay;
+  while (performance.now() < deadline) {}
+}
+
 // Grid Options are properties passed to the grid
 const gridOptions = {
 
@@ -88,6 +94,15 @@ window.addEventListener('pagehide', (event) => {
 // Element
 generateElementButton.addEventListener('click', event => {
 
+  if (document.getElementById('elementTimingTarget')) {
+    var element = document.getElementById('elementTimingTarget');
+    element.parentNode.removeChild(element);
+  }
+
+  const backgroundDiv = document.createElement("div");
+  backgroundDiv.id = "elementTimingTarget";
+  backgroundDiv.elementtiming = "my_div"
+  document.body.appendChild(backgroundDiv);
 });
 
 // Layout Shift
@@ -105,6 +120,13 @@ generateLayoutShiftButton.addEventListener('click', event => {
 
 // Long Animation Frame
 generateLongAnimationFrameButton.addEventListener('click', event => {
+  const img = document.createElement("img");
+  img.src = "/pwa/perfentry/green.png";
+  img.addEventListener("load", () => {
+      busy_wait();
+  });
+  img.id = "image";
+  document.body.appendChild(img);
 });
 
 // Long Task
@@ -155,7 +177,7 @@ generateResourceButton.addEventListener('click', event => {
 generateSoftNavigationButton.addEventListener('click', event => {
 });
 
-// Tsk Attribution
+// Task Attribution
 generateTaskAttributionButton.addEventListener('click', event => {
 });
 
