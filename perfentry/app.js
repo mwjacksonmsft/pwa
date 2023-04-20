@@ -42,8 +42,6 @@ function renderDataInTheTable(list, observer) {
     allPerfEntries.push(entry);
   }
   gridOptions.api.setRowData(allPerfEntries);
-  gridOptions.api.autoSizeAllColumns(true);
-
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -105,19 +103,6 @@ generateElementButton.addEventListener('click', event => {
   document.body.appendChild(backgroundDiv);
 });
 
-// Layout Shift
-generateLayoutShiftButton.addEventListener('click', event => {
-  if (document.getElementById('layoutShiftElement')) {
-    var element = document.getElementById('layoutShiftElement');
-    element.parentNode.removeChild(element);
-  } else {
-    const p = document.createElement('p');
-    p.id = 'layoutShiftElement'
-    p.textContent = 'LayoutShift';
-    document.body.insertBefore(p, document.body.firstChild);
-  }
-});
-
 // Long Animation Frame
 generateLongAnimationFrameButton.addEventListener('click', event => {
   const img = document.createElement("img");
@@ -160,7 +145,7 @@ generateResourceButton.addEventListener('click', event => {
   xhr.open('GET', 'https://mwjacksonmsft.github.io/pwa/perfentry/xmlhttprequestpayload.txt', true);
   xhr.ononreadystatechange = function() {
     let resourceState = document.getElementById('resourceState');
-    if (xhr.readyState === XMLHttpRequest.DONE) {
+    if (xhr.readyState === 4) {
       const status = xhr.status;
       if (status === 0 || (status >= 200 && status < 400)) {
         resourceState.innerText = xhr.responseText;
