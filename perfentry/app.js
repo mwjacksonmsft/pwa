@@ -14,6 +14,12 @@ function busy_wait(ms_delay = very_long_frame_duration) {
   while (performance.now() < deadline) {}
 }
 
+function removeElementById(id) {
+  if (document.getElementById('elementTimingTarget')) {
+    var element = document.getElementById('elementTimingTarget');
+    element.parentNode.removeChild(element);
+  }
+}
 // Grid Options are properties passed to the grid
 const gridOptions = {
 
@@ -35,10 +41,12 @@ if (navigator.serviceWorker) {
 }
 
 let allPerfEntries = [];
+let perfOrder = 0;
 
 function renderDataInTheTable(list, observer) {
   for (let entry of list.getEntries()) {
-    entry['order'] = allPerfEntries.length;
+    perfOrder++;
+    entry['order'] = perfOrder;
     allPerfEntries.push(entry);
   }
   gridOptions.api.setRowData(allPerfEntries);
@@ -54,12 +62,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
   const observer = new PerformanceObserver(renderDataInTheTable);
 
-  // 'script', << not supported
   [
     'back-forward-cache-restoration', 'element', 'event', 'first-input',
     'largest-contentful-paint', 'layout-shift', 'long-animation-frame',
     'longtask', 'mark', 'measure', 'navigation', 'paint', 'resource',
-    'soft-navigation', 'taskattribution', 'visibility-state'
+    'script', 'soft-navigation', 'taskattribution', 'visibility-state'
   ].forEach((type) => {
     console.log('Observing: ' + type);
     observer.observe({ type, buffered: true })
@@ -90,78 +97,78 @@ window.addEventListener('pagehide', (event) => {
 });
 
 // Element
-generateElementButton.addEventListener('click', event => {
+generateElementButton.addEventListener('click', (event) => {
 
-  if (document.getElementById('elementTimingTarget')) {
-    var element = document.getElementById('elementTimingTarget');
-    element.parentNode.removeChild(element);
-  }
+  removeElementById('elementTimingTarget');
 
   const backgroundDiv = document.createElement("div");
   backgroundDiv.id = "elementTimingTarget";
-  backgroundDiv.elementtiming = "my_div"
+  backgroundDiv.setAttribute('elementtiming', 'my_div');
   document.body.appendChild(backgroundDiv);
 });
 
 // Long Animation Frame
+generateLongAnimationFrameButton.addEventListener('click', async (event) => {
+
+  await new Promise( resolve => requestAnimationFrame(resolve) ).then(busy_wait)
+});
+
 generateLongAnimationFrameButton.addEventListener('click', event => {
+  removeElementById('animationFrameImage');
+
   const img = document.createElement("img");
   img.src = "/pwa/perfentry/green.png";
   img.addEventListener("load", () => {
       busy_wait();
   });
-  img.id = "image";
-  document.body.appendChild(img);
-});
-
-// Long Task
-generateLongTaskButton.addEventListener('click', event => {
+  img.id = "animationFrameImage";
+  document.getElementById('insertItem').appendChild(img);
 });
 
 // Mark
-generateMarkButton.addEventListener('click', event => {
+generateMarkButton.addEventListener('click', (event) => {
   window.performance.mark('mark_clicked');
 });
 
 // Measure
 var reqCnt = 0;
-generateMeasureButton.addEventListener('click', event => {
+generateMeasureButton.addEventListener('click', (event) => {
   reqCnt++;
   window.performance.mark('measure_clicked');
   window.performance.measure('measure_load_from_dom' + reqCnt, 'domComplete', 'measure_clicked');
 });
 
 // Navigation
-generateNavigationButton.addEventListener('click', event => {
+generateNavigationButton.addEventListener('click', (event) => {
 });
 
 // Paint
-generatePaintButton.addEventListener('click', event => {
+generatePaintButton.addEventListener('click', (event) => {
 });
 
 // Resource
-generateResourceButton.addEventListener('click', event => {
+generateResourceButton.addEventListener('click', (event) => {
   let resourceState = document.getElementById('resourceState');
 
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://mwjacksonmsft.github.io/pwa/perfentry/xmlhttprequestpayload.txt', true);
 
-  xhr.addEventListener("progress", e => {
+  xhr.addEventListener("progress", (e) => {
     resourceState.innerText = 'request in progress';
     console.log(resourceState.innerText);
   });
 
-  xhr.addEventListener("load", e => {
+  xhr.addEventListener("load", (e) => {
     resourceState.innerText = xhr.responseText;
     console.log(resourceState.innerText);
   });
 
-  xhr.addEventListener("error", e => {
+  xhr.addEventListener("error", (e) => {
     resourceState.innerText = 'error';
     console.log(resourceState.innerText);
   });
 
-  xhr.addEventListener("abort", e => {
+  xhr.addEventListener("abort", (e) => {
     resourceState.innerText = 'abort';
     console.log(resourceState.innerText);
   });
@@ -170,13 +177,13 @@ generateResourceButton.addEventListener('click', event => {
 });
 
 // Soft Navigation
-generateSoftNavigationButton.addEventListener('click', event => {
+generateSoftNavigationButton.addEventListener('click', (event) => {
 });
 
 // Task Attribution
-generateTaskAttributionButton.addEventListener('click', event => {
+generateTaskAttributionButton.addEventListener('click', (event) => {
 });
 
 // Visibility State
-generateVisibilityStateButton.addEventListener('click', event => {
+generateVisibilityStateButton.addEventListener('click', (event) => {
 });
