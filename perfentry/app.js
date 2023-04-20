@@ -107,12 +107,7 @@ generateElementButton.addEventListener('click', (event) => {
   document.getElementById('insertItem').appendChild(backgroundDiv);
 });
 
-// Long Animation Frame
-generateLongAnimationFrameButton.addEventListener('click', async (event) => {
-
-  await new Promise( resolve => requestAnimationFrame(resolve) ).then(busy_wait)
-});
-
+// Long Animation Frame and Long Task
 generateLongAnimationFrameButton.addEventListener('click', event => {
   removeElementById('animationFrameImage');
 
@@ -182,8 +177,4 @@ generateSoftNavigationButton.addEventListener('click', (event) => {
 
 // Task Attribution
 generateTaskAttributionButton.addEventListener('click', (event) => {
-});
-
-// Visibility State
-generateVisibilityStateButton.addEventListener('click', (event) => {
 });
