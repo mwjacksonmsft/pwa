@@ -104,7 +104,7 @@ generateElementButton.addEventListener('click', (event) => {
   const backgroundDiv = document.createElement("div");
   backgroundDiv.id = "elementTimingTarget";
   backgroundDiv.setAttribute('elementtiming', 'my_div');
-  document.body.appendChild(backgroundDiv);
+  document.getElementById('insertItem').appendChild(backgroundDiv);
 });
 
 // Long Animation Frame
