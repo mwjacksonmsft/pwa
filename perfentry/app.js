@@ -141,20 +141,31 @@ generatePaintButton.addEventListener('click', event => {
 
 // Resource
 generateResourceButton.addEventListener('click', event => {
+  let resourceState = document.getElementById('resourceState');
+
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://mwjacksonmsft.github.io/pwa/perfentry/xmlhttprequestpayload.txt', true);
-  xhr.ononreadystatechange = function() {
-    let resourceState = document.getElementById('resourceState');
-    if (xhr.readyState === 4) {
-      const status = xhr.status;
-      if (status === 0 || (status >= 200 && status < 400)) {
-        resourceState.innerText = xhr.responseText;
-      } else {
-        resourceState.innerText = 'Oh no! There has been an error with the request!';
-      }
-      console.log(resourceState.innerText);
-    }
-  };
+
+  xhr.addEventListener("progress", e => {
+    resourceState.innerText = 'request in progress';
+    console.log(resourceState.innerText);
+  });
+
+  xhr.addEventListener("load", e => {
+    resourceState.innerText = xhr.responseText;
+    console.log(resourceState.innerText);
+  });
+
+  xhr.addEventListener("error", e => {
+    resourceState.innerText = 'error';
+    console.log(resourceState.innerText);
+  });
+
+  xhr.addEventListener("abort", e => {
+    resourceState.innerText = 'abort';
+    console.log(resourceState.innerText);
+  });
+
   xhr.send();
 });
 
