@@ -13,14 +13,15 @@ const gridOptions = {
 
   // each entry here represents one column
   columnDefs: [
-    { field: "entryType" },
-    { field: "name" },
-    { field: "startTime" },
-    { field: "duration" },
+    { field: 'order', headerName: 'Order', width: 50 },
+    { field: 'entryType', headerName: 'Entry Type', width: 150 },
+    { field: 'name', headerName: 'Name' },
+    { field: 'startTime', headerName: 'Start Time' },
+    { field: 'duration', headerName: 'Duration' },
   ],
 
   // default col def properties get applied to all columns
-  defaultColDef: {sortable: true, filter: true},
+  defaultColDef: {sortable: true, filter: true, resizable: true},
 };
 
 if (navigator.serviceWorker) {
@@ -30,29 +31,134 @@ if (navigator.serviceWorker) {
 let allPerfEntries = [];
 
 function renderDataInTheTable(list, observer) {
-  allPerfEntries = allPerfEntries.concat(list.getEntries());
+  for (let entry of list.getEntries()) {
+    entry['order'] = allPerfEntries.length;
+    allPerfEntries.push(entry);
+  }
   gridOptions.api.setRowData(allPerfEntries);
+  gridOptions.api.autoSizeAllColumns(true);
+
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {
   console.log('DOM fully loaded and parsed');
 
   // get div to host the grid
-  const eGridDiv = document.getElementById("perfGrid");
+  const eGridDiv = document.getElementById('perfGrid');
   // new grid instance, passing in the hosting DIV and Grid Options
   new agGrid.Grid(eGridDiv, gridOptions);
 
   const observer = new PerformanceObserver(renderDataInTheTable);
 
-  // "script", << not supported
+  // 'script', << not supported
   [
-    "back-forward-cache-restoration", "element", "event", "first-input",
-    "largest-contentful-paint", "layout-shift", "long-animation-frame",
-    "longtask", "mark", "measure", "navigation", "paint", "resource",
-    "soft-navigation", "taskattribution", "visibility-state"
+    'back-forward-cache-restoration', 'element', 'event', 'first-input',
+    'largest-contentful-paint', 'layout-shift', 'long-animation-frame',
+    'longtask', 'mark', 'measure', 'navigation', 'paint', 'resource',
+    'soft-navigation', 'taskattribution', 'visibility-state'
   ].forEach((type) => {
     console.log('Observing: ' + type);
     observer.observe({ type, buffered: true })
   });
+
 });
 
+
+// BFCache Handlers
+window.addEventListener('pageshow', (event) => {
+  let bfCacheState = document.getElementById('bfCacheState');
+  if (event.persisted) {
+    bfCacheState.innerText = 'This page was restored from the bfcache.';
+  } else {
+    bfCacheState.innerText =  'This page was loaded normally.';
+  }
+  console.log(bfCacheState.innerText);
+});
+
+window.addEventListener('pagehide', (event) => {
+  let bfCacheState = document.getElementById('bfCacheState');
+  if (event.persisted) {
+    bfCacheState.innerText = 'This page *might* be entering the bfcache.';
+  } else {
+    bfCacheState.innerText = 'This page will unload normally and be discarded.';
+  }
+  console.log(bfCacheState.innerText);
+});
+
+// Element
+generateElementButton.addEventListener('click', event => {
+
+});
+
+// Layout Shift
+generateLayoutShiftButton.addEventListener('click', event => {
+  if (document.getElementById('layoutShiftElement')) {
+    var element = document.getElementById('layoutShiftElement');
+    element.parentNode.removeChild(element);
+  } else {
+    const p = document.createElement('p');
+    p.id = 'layoutShiftElement'
+    p.textContent = 'LayoutShift';
+    document.body.insertBefore(p, document.body.firstChild);
+  }
+});
+
+// Long Animation Frame
+generateLongAnimationFrameButton.addEventListener('click', event => {
+});
+
+// Long Task
+generateLongTaskButton.addEventListener('click', event => {
+});
+
+// Mark
+generateMarkButton.addEventListener('click', event => {
+  window.performance.mark('mark_clicked');
+});
+
+// Measure
+var reqCnt = 0;
+generateMeasureButton.addEventListener('click', event => {
+  reqCnt++;
+  window.performance.mark('measure_clicked');
+  window.performance.measure('measure_load_from_dom' + reqCnt, 'domComplete', 'measure_clicked');
+});
+
+// Navigation
+generateNavigationButton.addEventListener('click', event => {
+});
+
+// Paint
+generatePaintButton.addEventListener('click', event => {
+});
+
+// Resource
+generateResourceButton.addEventListener('click', event => {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://mwjacksonmsft.github.io/pwa/perfentry/xmlhttprequestpayload.txt', true);
+  xhr.ononreadystatechange = function() {
+    let resourceState = document.getElementById('resourceState');
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      const status = xhr.status;
+      if (status === 0 || (status >= 200 && status < 400)) {
+        resourceState.innerText = xhr.responseText;
+      } else {
+        resourceState.innerText = 'Oh no! There has been an error with the request!';
+      }
+      console.log(resourceState.innerText);
+    }
+  };
+  xhr.send();
+});
+
+// Soft Navigation
+generateSoftNavigationButton.addEventListener('click', event => {
+});
+
+// Tsk Attribution
+generateTaskAttributionButton.addEventListener('click', event => {
+});
+
+// Visibility State
+generateVisibilityStateButton.addEventListener('click', event => {
+});

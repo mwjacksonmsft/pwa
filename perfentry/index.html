@@ -9,13 +9,42 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.css"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-alpine.css"/>
     </head>
-
     <body>
-
-      <div id="perfGrid" class="ag-theme-alpine" style="height: 500px"></div>
-
+      <table style="height:100%;width:100%; position: absolute; top: 0; bottom: 0; left: 0; right: 0;border:1px solid">
+        <caption>Performance Entry Test Page</caption>
+        <tbody>
+          <tr style="height: 20px;">
+            <td style="width: 100%;">
+              <button id="generateElementButton">Generate Element</button>
+              <button id="generateLayoutShiftButton">Generate Layout Shift</button>
+              <button id="generateLongAnimationFrameButton">Generate Long Animation Frame</button>
+              <button id="generateLongTaskButton">Generate Long Task</button>
+              <button id="generateMarkButton">Generate Mark</button>
+              <button id="generateMeasureButton">Generate Measure</button>
+              <button id="generateNavigationButton">Generate Navigation</button>
+              <button id="generatePaintButton">Generate Paint</button>
+              <button id="generateResourceButton">Generate Resource</button>
+              <button id="generateSoftNavigationButton">Generate Soft Navigation</button>
+              <button id="generateTaskAttributionButton">Generate Task Attribution</button>
+              <button id="generateVisibilityStateButton">Generate Visibility State</button>
+          </tr>
+          <tr style="height: 20px;">
+            <td style="width: 100%;">
+              <p>BFCache State: <div id="bfCacheState">Not Set</div></p>
+            </td>
+          </tr>
+          <tr style="height: 20px;">
+            <td style="width: 100%;">
+              <p>Resource Request State: <div id="resourceState">Not Set</div></p>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 100%; height: 100%;">
+              <div id="perfGrid" class="ag-theme-alpine" style="height: 100%; width: 100%"></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </body>
     <script src="app.js"></script>
-
-
 </html>
