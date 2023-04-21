@@ -26,8 +26,8 @@ const gridOptions = {
 
   // each entry here represents one column
   columnDefs: [
-    { field: 'order', headerName: 'Order', width: 150 },
-    { field: 'entryType', headerName: 'Entry Type', width: 250 },
+    { field: 'order', headerName: 'Order', width: 100 },
+    { field: 'entryType', headerName: 'Entry Type', width: 170 },
     { field: 'name', headerName: 'Name', width: 300 },
     { field: 'startTime', headerName: 'Start Time' },
     { field: 'duration', headerName: 'Duration' },
@@ -64,6 +64,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
   const eGridDiv = document.getElementById('perfGrid');
   // new grid instance, passing in the hosting DIV and Grid Options
   new agGrid.Grid(eGridDiv, gridOptions);
+
+  if (window.PerformanceLongAnimationFrameTiming) {
+    document.getElementById('requirementsMet').innerText = "You have experimental web platform features enabled.";
+  }
 
   const observer = new PerformanceObserver(renderDataInTheTable);
 
@@ -106,22 +110,22 @@ window.addEventListener('pagehide', (event) => {
 generateEventButton.addEventListener('click', (event) => {
 
   // Create a synthetic click MouseEvent
-  let evt = new MouseEvent("click", {
+  let evt = new MouseEvent('click', {
     bubbles: true,
     cancelable: true,
     view: window,
   });
 
   // Send the event to the checkbox element
-  document.getElementById("checkbox").dispatchEvent(evt);
+  document.getElementById('checkbox').dispatchEvent(evt);
 });
 
 // Element and Layout Shift
 generateElementButton.addEventListener('click', (event) => {
   removeElementById('elementTimingTarget');
 
-  const backgroundDiv = document.createElement("div");
-  backgroundDiv.id = "elementTimingTarget";
+  const backgroundDiv = document.createElement('div');
+  backgroundDiv.id = 'elementTimingTarget';
   backgroundDiv.setAttribute('elementtiming', 'my_div');
   document.getElementById('insertItem').appendChild(backgroundDiv);
 });
@@ -130,12 +134,12 @@ generateElementButton.addEventListener('click', (event) => {
 generateLongAnimationFrameButton.addEventListener('click', event => {
   removeElementById('animationFrameImage');
 
-  const img = document.createElement("img");
-  img.src = "/pwa/perfentry/green.png";
-  img.addEventListener("load", () => {
+  const img = document.createElement('img');
+  img.src = '/pwa/perfentry/green.png';
+  img.addEventListener('load', () => {
       busy_wait();
   });
-  img.id = "animationFrameImage";
+  img.id = 'animationFrameImage';
   document.getElementById('insertItem').appendChild(img);
 });
 
@@ -159,22 +163,22 @@ generateResourceButton.addEventListener('click', (event) => {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://mwjacksonmsft.github.io/pwa/perfentry/xmlhttprequestpayload.txt', true);
 
-  xhr.addEventListener("progress", (e) => {
+  xhr.addEventListener('progress', (e) => {
     resourceState.innerText = 'request in progress';
     console.log(resourceState.innerText);
   });
 
-  xhr.addEventListener("load", (e) => {
+  xhr.addEventListener('load', (e) => {
     resourceState.innerText = xhr.responseText;
     console.log(resourceState.innerText);
   });
 
-  xhr.addEventListener("error", (e) => {
+  xhr.addEventListener('error', (e) => {
     resourceState.innerText = 'error';
     console.log(resourceState.innerText);
   });
 
-  xhr.addEventListener("abort", (e) => {
+  xhr.addEventListener('abort', (e) => {
     resourceState.innerText = 'abort';
     console.log(resourceState.innerText);
   });
