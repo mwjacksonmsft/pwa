@@ -15,19 +15,20 @@ function busy_wait(ms_delay = very_long_frame_duration) {
 }
 
 function removeElementById(id) {
-  if (document.getElementById('elementTimingTarget')) {
-    var element = document.getElementById('elementTimingTarget');
+  let element = document.getElementById(id);
+  if (element) {
     element.parentNode.removeChild(element);
   }
 }
+
 // Grid Options are properties passed to the grid
 const gridOptions = {
 
   // each entry here represents one column
   columnDefs: [
-    { field: 'order', headerName: 'Order', width: 50 },
-    { field: 'entryType', headerName: 'Entry Type', width: 150 },
-    { field: 'name', headerName: 'Name' },
+    { field: 'order', headerName: 'Order', width: 150 },
+    { field: 'entryType', headerName: 'Entry Type', width: 250 },
+    { field: 'name', headerName: 'Name', width: 300 },
     { field: 'startTime', headerName: 'Start Time' },
     { field: 'duration', headerName: 'Duration' },
   ],
@@ -40,16 +41,20 @@ if (navigator.serviceWorker) {
   registerServiceWorker();
 }
 
-let allPerfEntries = [];
-let perfOrder = 0;
-
+let gridOrder = 0;
 function renderDataInTheTable(list, observer) {
+  let newItems = [];
+
   for (let entry of list.getEntries()) {
-    perfOrder++;
-    entry['order'] = perfOrder;
-    allPerfEntries.push(entry);
+    const clone = structuredClone(entry);
+    gridOrder++;
+    clone['order'] = gridOrder;
+    newItems.push(clone);
   }
-  gridOptions.api.setRowData(allPerfEntries);
+
+  const res = gridOptions.api.applyTransaction({
+    add: newItems,
+  });
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -62,14 +67,15 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
   const observer = new PerformanceObserver(renderDataInTheTable);
 
+  //'script' << not supported
   [
     'back-forward-cache-restoration', 'element', 'event', 'first-input',
     'largest-contentful-paint', 'layout-shift', 'long-animation-frame',
     'longtask', 'mark', 'measure', 'navigation', 'paint', 'resource',
-    'script', 'soft-navigation', 'taskattribution', 'visibility-state'
+    'soft-navigation', 'taskattribution', 'visibility-state'
   ].forEach((type) => {
     console.log('Observing: ' + type);
-    observer.observe({ type, buffered: true })
+    observer.observe({ type, buffered: true, includeSoftNavigationObservations: true })
   });
 
 });
@@ -96,9 +102,20 @@ window.addEventListener('pagehide', (event) => {
   console.log(bfCacheState.innerText);
 });
 
-// Element
-generateElementButton.addEventListener('click', (event) => {
+// Event
+generateEventButton.addEventListener('click', (event) => {
 
+  let evt = new MouseEvent('contextmenu', {
+    bubbles: true,
+    cancelable: true,
+    view: window,
+  });
+
+  document.getElementById('insertItem').dispatchEvent(evt);
+});
+
+// Element and Layout Shift
+generateElementButton.addEventListener('click', (event) => {
   removeElementById('elementTimingTarget');
 
   const backgroundDiv = document.createElement("div");
@@ -133,14 +150,6 @@ generateMeasureButton.addEventListener('click', (event) => {
   window.performance.measure('measure_load_from_dom' + reqCnt, 'domComplete', 'measure_clicked');
 });
 
-// Navigation
-generateNavigationButton.addEventListener('click', (event) => {
-});
-
-// Paint
-generatePaintButton.addEventListener('click', (event) => {
-});
-
 // Resource
 generateResourceButton.addEventListener('click', (event) => {
   let resourceState = document.getElementById('resourceState');
@@ -172,9 +181,17 @@ generateResourceButton.addEventListener('click', (event) => {
 });
 
 // Soft Navigation
+let softNavigates = 0;
 generateSoftNavigationButton.addEventListener('click', (event) => {
+  removeElementById('elementTimingTarget');
+  removeElementById('animationFrameImage');
+
+  let resourceState = document.getElementById('resourceState');
+  resourceState.innerText = 'Not Set';
+
+  softNavigates++;
+  let path = window.location.href.split('#')[0];
+  window.location.href = path + '#' + softNavigates;
+
 });
 
-// Task Attribution
-generateTaskAttributionButton.addEventListener('click', (event) => {
-});
