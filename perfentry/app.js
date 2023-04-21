@@ -46,7 +46,7 @@ function renderDataInTheTable(list, observer) {
   let newItems = [];
 
   for (let entry of list.getEntries()) {
-    const clone = structuredClone(entry);
+    const clone = JSON.parse(JSON.stringify(entry));
     gridOrder++;
     clone['order'] = gridOrder;
     newItems.push(clone);
