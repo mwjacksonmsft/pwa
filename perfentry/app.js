@@ -106,20 +106,6 @@ window.addEventListener('pagehide', (event) => {
   console.log(bfCacheState.innerText);
 });
 
-// Event
-generateEventButton.addEventListener('click', (event) => {
-
-  // Create a synthetic click MouseEvent
-  let evt = new MouseEvent('click', {
-    bubbles: true,
-    cancelable: true,
-    view: window,
-  });
-
-  // Send the event to the checkbox element
-  document.getElementById('checkbox').dispatchEvent(evt);
-});
-
 // Element and Layout Shift
 generateElementButton.addEventListener('click', (event) => {
   removeElementById('elementTimingTarget');
