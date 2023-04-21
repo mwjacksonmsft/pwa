@@ -105,13 +105,15 @@ window.addEventListener('pagehide', (event) => {
 // Event
 generateEventButton.addEventListener('click', (event) => {
 
-  let evt = new MouseEvent('contextmenu', {
+  // Create a synthetic click MouseEvent
+  let evt = new MouseEvent("click", {
     bubbles: true,
     cancelable: true,
     view: window,
   });
 
-  document.getElementById('insertItem').dispatchEvent(evt);
+  // Send the event to the checkbox element
+  document.getElementById("checkbox").dispatchEvent(evt);
 });
 
 // Element and Layout Shift
