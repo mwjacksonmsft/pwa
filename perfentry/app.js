@@ -82,6 +82,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
     observer.observe({ type, buffered: true, includeSoftNavigationObservations: true })
   });
 
+
+  const navigationEntries = window.performance.getEntriesByType('navigation');
+  let systemEntropy = 'none';
+  if (navigationEntries.length > 0) {
+    const navigationEntry = navigationEntries[0];
+    if (navigationEntry.systemEntropy) {
+      systemEntropy = navigationEntry.systemEntropy
+    }
+  }
+  let systemEntropyState = document.getElementById('systemEntropy');
+  systemEntropyState.innerText = 'System Entropy: ' + systemEntropy;
 });
 
 
