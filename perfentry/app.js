@@ -198,3 +198,21 @@ generateSoftNavigationButton.addEventListener('click', (event) => {
 
 });
 
+generateFencedFrameButton.addEventListener('click', (event) => {
+  if (!window.HTMLFencedFrameElement) {
+    let resourceState = document.getElementById('resourceState');
+
+    resourceState.innerText = 'HTMLFencedFrameElement does not exist';
+    console.log(resourceState.innerText);
+    return;
+  }
+
+  var f = document.createElement('fencedframe');
+  const url = new URL(
+    '/pwa/perfentry/fencedframe.html',
+    location.origin
+  );
+  f.config = new FencedFrameConfig(url);
+  document.body.appendChild(f);
+  document.getElementById('insertItem').appendChild(f);
+});
