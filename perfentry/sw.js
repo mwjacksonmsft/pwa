@@ -4,9 +4,19 @@ this.addEventListener('install', async (event) => {
 });
 
 self.addEventListener('fetch', e => {
-  e.respondWith(
-    fetch(e.request).catch(() => {
-      return new Response('Hello offline page');
-    })
-  );
+
+  const newResponse = fetch(e.request).then(response => {
+    const newHeaders = new Headers(response.headers);
+    newHeaders.append('Supports-Loading-Mode', 'fenced-frame');
+
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: newHeaders
+    });
+  }).catch(() => {
+    return new Response('Hello offline page');
+  });
+
+  e.respondWith(newResponse);
 });
