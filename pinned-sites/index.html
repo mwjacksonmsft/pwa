@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Pinned Site</title>
+  <meta name="application-name" content="My Pinned Site" />
+  <meta name="msapplication-tooltip" content="An example site for demonstrating pinned site apis" />
+  <meta name="msapplication-starturl" content="https://mwjacksonmsft.github.io/pinned-sites/" />
+  <meta name="msapplication-window" content="width=1024;height=768" />
+  <meta name="msapplication-navbutton-color" content="rebeccapurple" />
+
+  <meta content="name=Launc Pinned Site Example;
+      action-uri=https://mwjacksonmsft.github.io/pinned-sites/?src=task;
+      icon-uri=favicon.ico" name="msapplication-task" />
+
+  <script>
+    function isFromTask() {
+      return window.location.search.includes('?src=task')
+    }
+
+    function updateIsFromTask() {
+      var elem = document.getElementById('isFromTask');
+      if (isFromTask()) {
+        elem.innerText = "From Task Bar";
+      } else {
+        elem.innerText = "Not from Task Bar";
+      }
+    }
+
+  </script>
+</head>
+<body onload="updateIsFromTask()">
+  <p>This is an example of a pinned site.</p>
+  <p id="isFromTask"></p>
+
+</body>
+
+</html>
