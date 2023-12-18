@@ -7,17 +7,17 @@
   <title>Pinned Site</title>
   <meta name="application-name" content="My Pinned Site" />
   <meta name="msapplication-tooltip" content="An example site for demonstrating pinned site apis" />
-  <meta name="msapplication-starturl" content="https://mwjacksonmsft.github.io/pinned-sites/" />
+  <meta name="msapplication-starturl" content="https://mwjacksonmsft.github.io/pwa/pinned-sites/" />
   <meta name="msapplication-window" content="width=1024;height=768" />
   <meta name="msapplication-navbutton-color" content="rebeccapurple" />
 
   <meta content="name=Launc Pinned Site Example;
-      action-uri=https://mwjacksonmsft.github.io/pinned-sites/?src=task;
+      action-uri=https://mwjacksonmsft.github.io/pwa/pinned-sites/?src=task;
       icon-uri=favicon.ico" name="msapplication-task" />
 
   <script>
     function isFromTask() {
-      return window.location.search.includes('?src=task')
+      return window.location.search.indexOf('?src=task') !== -1
     }
 
     function updateIsFromTask() {
