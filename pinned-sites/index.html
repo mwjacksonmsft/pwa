@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width">
   <title>Pinned Site</title>
   <meta name="application-name" content="My Pinned Site Example" />
+  <link rel="shortcut icon" href="favicon.ico" />
   <meta name="msapplication-tooltip" content="An example site for demonstrating pinned site apis" />
   <meta name="msapplication-starturl" content="https://mwjacksonmsft.github.io/pwa/pinned-sites/" />
   <meta name="msapplication-window" content="width=1024;height=768" />
@@ -20,20 +21,28 @@
       return window.location.search.indexOf('?src=task') !== -1
     }
 
-    function updateIsFromTask() {
-      var elem = document.getElementById('isFromTask');
+    function updateMetaData() {
+      var elem = document.getElementById('isLaunchedFromTask');
       if (isFromTask()) {
         elem.innerText = "From Task Bar";
       } else {
         elem.innerText = "Not from Task Bar";
       }
+
+      var elem2 = document.getElementById('isLaunchedInSiteMode');
+      if (window.external.msIsSiteMode && window.external.msIsSiteMode()) {
+        elem2.innerText = "Launched in SiteMode";
+      } else {
+        elem2.innerText = "Not Launched in SiteMode";
+      }
     }
 
   </script>
 </head>
-<body onload="updateIsFromTask()">
+<body onload="updateMetaData()">
   <p>This is an example of a pinned site.</p>
-  <p id="isFromTask"></p>
+  <p id="isLaunchedFromTask"></p>
+  <p id="isLaunchedInSiteMode"></p>
 
 </body>
 
