@@ -42,7 +42,11 @@ if (navigator.serviceWorker) {
 }
 
 function updateConfidence(navigationEntry, reason) {
-  document.getElementById('confidence').innerText += "\r\nreason: " + reason + ", value: " + navigationEntry.confidence.value + ", randomizedTriggerRate: " + navigationEntry.confidence.randomizedTriggerRate;
+  if (navigationEntry.confidence) {
+    document.getElementById('confidence').innerText += "\r\nreason: " + reason + ", value: " + navigationEntry.confidence.value + ", randomizedTriggerRate: " + navigationEntry.confidence.randomizedTriggerRate;
+  } else {
+    document.getElementById('confidence').innerText += "\r\nreason: no confidence value available.";
+  }
 }
 
 let gridOrder = 0;
@@ -66,12 +70,7 @@ function renderDataInTheTable(list, observer) {
   });
 }
 
-
-
-const [initialNavigationEntry] = window.performance.getEntriesByType('navigation');
-if (initialNavigationEntry.confidence) {
-  updateConfidence(initialNavigationEntry, "initial");
-}
+updateConfidence(window.performance.getEntriesByType('navigation')[0], "initial");
 
 window.addEventListener('DOMContentLoaded', (event) => {
   console.log('DOM fully loaded and parsed');
