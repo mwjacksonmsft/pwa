@@ -57,6 +57,14 @@ function renderDataInTheTable(list, observer) {
   });
 }
 
+const [navigationEntries] = window.performance.getEntriesByType('navigation');
+if (navigationEntries.confidence) {
+  const confidence = document.createElement('div');
+  confidence.id = 'confidence';
+  confidence.innerText = "value == " + navigationEntries.confidence.value + ", randomizedTriggerRate == " + navigationEntries.confidence.randomizedTriggerRate;
+  document.getElementById('insertItem').appendChild(confidence);
+}
+
 window.addEventListener('DOMContentLoaded', (event) => {
   console.log('DOM fully loaded and parsed');
 
