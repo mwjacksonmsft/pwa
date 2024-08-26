@@ -55,7 +55,7 @@ function renderDataInTheTable(list, observer) {
 
   for (let entry of list.getEntries()) {
 
-    if (entry.type == 'navigation') {
+    if (entry.entryType == 'navigation') {
       updateConfidence(entry, 'observer');
     }
 
