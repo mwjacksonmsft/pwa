@@ -45,7 +45,7 @@ function updateConfidence(navigationEntry, reason) {
   if (navigationEntry.confidence) {
     document.getElementById('confidence').innerText += "\r\nreason: " + reason + ", value: " + navigationEntry.confidence.value + ", randomizedTriggerRate: " + navigationEntry.confidence.randomizedTriggerRate;
   } else {
-    document.getElementById('confidence').innerText += "\r\nreason: no confidence value available.";
+    document.getElementById('confidence').innerText += "\r\nreason: " + reason + ", no confidence value available.";
   }
 }
 
