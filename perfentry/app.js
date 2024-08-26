@@ -41,11 +41,20 @@ if (navigator.serviceWorker) {
   registerServiceWorker();
 }
 
+function updateConfidence(navigationEntry, reason) {
+  document.getElementById('confidence').innerText += "\r\nreason: " + reason + ", value: " + navigationEntry.confidence.value + ", randomizedTriggerRate: " + navigationEntry.confidence.randomizedTriggerRate;
+}
+
 let gridOrder = 0;
 function renderDataInTheTable(list, observer) {
   let newItems = [];
 
   for (let entry of list.getEntries()) {
+
+    if (entry.type == 'navigation') {
+      updateConfidence(entry, 'observer');
+    }
+
     const clone = JSON.parse(JSON.stringify(entry));
     gridOrder++;
     clone['order'] = gridOrder;
@@ -57,12 +66,11 @@ function renderDataInTheTable(list, observer) {
   });
 }
 
-const [navigationEntries] = window.performance.getEntriesByType('navigation');
-if (navigationEntries.confidence) {
-  const confidence = document.createElement('div');
-  confidence.id = 'confidence';
-  confidence.innerText = "value == " + navigationEntries.confidence.value + ", randomizedTriggerRate == " + navigationEntries.confidence.randomizedTriggerRate;
-  document.getElementById('insertItem').appendChild(confidence);
+
+
+const [initialNavigationEntry] = window.performance.getEntriesByType('navigation');
+if (initialNavigationEntry.confidence) {
+  updateConfidence(initialNavigationEntry, "initial");
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -101,6 +109,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
   }
   let systemEntropyState = document.getElementById('systemEntropy');
   systemEntropyState.innerText = 'System Entropy: ' + systemEntropy;
+
+  updateConfidence(navigationEntries[0], "dom content loaded");
 });
 
 
