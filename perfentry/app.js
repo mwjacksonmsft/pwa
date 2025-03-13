@@ -49,6 +49,7 @@ function updateConfidence(navigationEntry, reason) {
   }
 }
 
+let gridApi;
 let gridOrder = 0;
 function renderDataInTheTable(list, observer) {
   let newItems = [];
@@ -65,7 +66,7 @@ function renderDataInTheTable(list, observer) {
     newItems.push(clone);
   }
 
-  const res = gridOptions.api.applyTransaction({
+  const res = gridApi.applyTransaction({
     add: newItems,
   });
 }
@@ -78,7 +79,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
   // get div to host the grid
   const eGridDiv = document.getElementById('perfGrid');
   // new grid instance, passing in the hosting DIV and Grid Options
-  agGrid.createGrid(eGridDiv, gridOptions);
+  gridApi = agGrid.createGrid(eGridDiv, gridOptions);
 
   if (window.PerformanceLongAnimationFrameTiming) {
     document.getElementById('requirementsMet').innerText = "You have experimental web platform features enabled.";
