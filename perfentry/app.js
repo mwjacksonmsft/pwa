@@ -78,7 +78,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
   // get div to host the grid
   const eGridDiv = document.getElementById('perfGrid');
   // new grid instance, passing in the hosting DIV and Grid Options
-  new agGrid.Grid(eGridDiv, gridOptions);
+  agGrid.createGrid(eGridDiv, gridOptions);
 
   if (window.PerformanceLongAnimationFrameTiming) {
     document.getElementById('requirementsMet').innerText = "You have experimental web platform features enabled.";
