@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigable List with iFrame</title>
+    <style>
+        body {
+            display: flex;
+            font-family: Arial, sans-serif;
+        }
+        #list {
+            width: 30%;
+            border-right: 1px solid #ccc;
+            padding: 10px;
+        }
+        #list div {
+            padding: 10px;
+            cursor: pointer;
+        }
+        #list div.active {
+            background-color: #007BFF;
+            color: white;
+        }
+        iframe {
+            width: 70%;
+            height: 100vh;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="list">
+        <div data-text="New comment on your post">New comment on your post</div>
+        <div data-text="Your password was changed successfully">Your password was changed successfully</div>
+        <div data-text="Reminder: Meeting at 3 PM">Reminder: Meeting at 3 PM</div>
+        <div data-text="New friend request received">New friend request received</div>
+        <div data-text="System update available">System update available</div>
+        <div data-text="Your subscription is about to expire">Your subscription is about to expire</div>
+    </div>
+    <iframe id="content" src="notification.html"></iframe>
+
+    <script>
+        const listItems = document.querySelectorAll('#list div');
+        const iframe = document.getElementById('content');
+        let currentIndex = 0;
+
+        function updateActiveItem(index) {
+            listItems.forEach((item, i) => {
+                item.classList.toggle('active', i === index);
+            });
+            const text = encodeURIComponent(listItems[index].dataset.text);
+            iframe.src = `notification.html?text=${text}`;
+        }
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowDown') {
+                currentIndex = (currentIndex + 1) % listItems.length;
+                updateActiveItem(currentIndex);
+            } else if (event.key === 'ArrowUp') {
+                currentIndex = (currentIndex - 1 + listItems.length) % listItems.length;
+                updateActiveItem(currentIndex);
+            }
+        });
+
+        listItems.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                currentIndex = index;
+                updateActiveItem(currentIndex);
+            });
+        });
+
+        // Initialize the first item as active
+        updateActiveItem(currentIndex);
+    </script>
+</body>
+</html>

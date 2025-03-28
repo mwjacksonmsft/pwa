@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f9f9f9; /* Light grey background */
+        }
+        #notification {
+            font-size: 1.5em;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div id="notification"></div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const text = params.get('text');
+        document.getElementById('notification').textContent = text || 'No notification selected.';
+    </script>
+</body>
+</html>
